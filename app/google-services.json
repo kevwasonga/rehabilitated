@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "427697984931",
+    "project_id": "myrehab-db5bf",
+    "storage_bucket": "myrehab-db5bf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:427697984931:android:a8347d3288d0bb1bd0b616",
+        "android_client_info": {
+          "package_name": "com.daghlas.myrehab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "427697984931-ku2ut170q4uco4g3f10ss3oioqkb2pd8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCynTbeCrrGm1zmoxidzXpXaL3Y66yVmJU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "427697984931-ku2ut170q4uco4g3f10ss3oioqkb2pd8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
