@@ -12,16 +12,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView greetings;
+    TextView name1, name3, email, id, tag;
     LinearLayout enroll_kid, new_rehab, manage_kids, manage_rehabs;
+    //Firebase
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
         //status bar color
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.green));
+
+        nameIdEmail();
 
         //greeting Tag
         greetings = findViewById(R.id.greetingTag);
@@ -51,6 +64,15 @@ public class MainActivity extends AppCompatActivity {
         new_rehab = findViewById(R.id.layout2);
         manage_kids = findViewById(R.id.layout3);
         manage_rehabs = findViewById(R.id.layout4);
+
+        name1 = findViewById(R.id.fname);
+        name3 = findViewById(R.id.lname);
+        email = findViewById(R.id.mail);
+        id = findViewById(R.id.id);
+        tag = findViewById(R.id.nameTag);
+
+        //Firebase
+        mAuth = FirebaseAuth.getInstance();
 
         enroll_kid.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,13 +160,35 @@ public class MainActivity extends AppCompatActivity {
                     .setPositiveButton("No", (dialog, id) -> {
                     })
                     .setNegativeButton("Yes", (dialog, id) -> {
+                        mAuth.signOut(); //SIGN OUT LOGGED IN USER
                         Intent intent = new Intent(MainActivity.this, Login.class);
                         startActivity(intent);
                         finish();
+                        Toast.makeText(this, "Logged out.", Toast.LENGTH_SHORT).show();
                     });
             AlertDialog alert = builder.create();
             alert.show();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void nameIdEmail() {
+        //database
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        String userID = mAuth.getCurrentUser().getUid();
+
+        DocumentReference documentReference = firebaseFirestore.collection("USERS").document(userID);
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                assert value != null;
+                name1.setText(value.getString("firstName"));
+                name3.setText(value.getString("lastName"));
+                email.setText(value.getString("email"));
+                id.setText(value.getString("nationalID"));
+                tag.setText(value.getString("lastName"));
+            }
+        });
     }
 }
