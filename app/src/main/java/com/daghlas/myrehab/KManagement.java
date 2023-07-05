@@ -1,6 +1,7 @@
 package com.daghlas.myrehab;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,11 +12,20 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class KManagement extends AppCompatActivity implements KManagementInterface {
 
     RecyclerView recyclerView;
+    TextView name1, name3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +38,10 @@ public class KManagement extends AppCompatActivity implements KManagementInterfa
             getSupportActionBar().setTitle("Manage Enrolled Kids");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        nameIdEmail();
+        name1 = findViewById(R.id.fname);
+        name3 = findViewById(R.id.lname);
 
         //inflating the adapter to the recyclerview
         recyclerView = findViewById(R.id.recyclerView);
@@ -71,5 +85,22 @@ public class KManagement extends AppCompatActivity implements KManagementInterfa
             Toast.makeText(this, "button to search kids on this list..", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void nameIdEmail() {
+        //database
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        String userID = mAuth.getCurrentUser().getUid();
+
+        DocumentReference documentReference = firebaseFirestore.collection("USERS").document(userID);
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                assert value != null;
+                name1.setText(value.getString("firstName"));
+                name3.setText(value.getString("lastName"));
+            }
+        });
     }
 }
