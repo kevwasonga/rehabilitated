@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="First Name"
-            android:inputType="textEmailAddress" />
+            android:inputType="textCapWords" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -60,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Last Name"
-            android:inputType="textEmailAddress" />
+            android:inputType="textCapWords" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/ic_id"
             android:hint="National ID"
-            android:inputType="textEmailAddress" />
+            android:inputType="number" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -175,6 +175,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
+        android:indeterminateTint="@color/green"
         app:layout_constraintBottom_toBottomOf="@id/signup_btn"
         app:layout_constraintEnd_toEndOf="@id/signup_btn"
         app:layout_constraintStart_toStartOf="@id/signup_btn"
