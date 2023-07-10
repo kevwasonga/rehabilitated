@@ -104,7 +104,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Full name"
-                    android:inputType="textCapCharacters"
+                    android:inputType="textCapWords"
                     android:textSize="12dp"
                     tools:ignore="SpeakableTextPresentCheck" />
 
@@ -122,7 +122,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Area of residence"
-                    android:inputType="textCapCharacters"
+                    android:inputType="textCapWords"
                     android:textSize="12dp"
                     tools:ignore="SpeakableTextPresentCheck" />
 
@@ -140,7 +140,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Assign a guardian (FULL NAME)"
-                    android:inputType="textCapCharacters"
+                    android:inputType="textCapWords"
                     android:textSize="12dp"
                     tools:ignore="SpeakableTextPresentCheck" />
 
@@ -285,6 +285,13 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/btn_bg"
                 android:text="save" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="date"
+                android:layout_gravity="center"/>
 
         </LinearLayout>
 
