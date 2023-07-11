@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">MyREHAB</string>
+    <string name="good_morning">Good morning</string>
+    <string name="good_afternoon">Good afternoon</string>
+    <string name="good_evening">Good evening</string>
+    <string name="good_night">Good night</string>
+    <string name="already_have_an_account_login_here">Already have an account? <u>Login Here.</u></string>
+    <string name="scan_fingerprint"><u>Scan fingerprint</u></string>
+    <string name="scan_face_id"><u>Scan face id</u></string>
+    <string name="enroll_new_kid_here"><u>enroll new kid here</u></string>
+    <string name="add_new_rehab_here"><u>add new rehab here</u></string>
+</resources>
