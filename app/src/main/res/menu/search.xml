@@ -7,7 +7,8 @@
             android:id="@+id/search"
             android:title="Search"
             android:icon="@drawable/ic_search"
-            app:showAsAction="ifRoom"/>
+            app:showAsAction="ifRoom"
+            app:actionViewClass="androidx.appcompat.widget.SearchView"/>
     </group>
 
 </menu>
