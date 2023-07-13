@@ -2,11 +2,6 @@ package com.daghlas.myrehab;
 
 import static android.service.controls.ControlsProviderService.TAG;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,11 +13,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -31,6 +25,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+/**
+ * DEVELOPER: daghlaskaire58@gmail.com
+ * For KELVIN WASONGA
+ * JULY 2023
+ */
 
 public class SignUp extends AppCompatActivity {
 
@@ -44,6 +44,7 @@ public class SignUp extends AppCompatActivity {
     FirebaseUser mUser;
     FirebaseFirestore firebaseFirestore;
 
+    @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,35 +65,26 @@ public class SignUp extends AppCompatActivity {
         confirm = findViewById(R.id.confirm);
 
         //go to main activity when log in button is clicked
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!validateFirstName() | !validateLatName() | !validateNationalID() | !validateMail() | !validatePwd() | !validateConfirmPwd()){
-                    progressBar.setVisibility(View.GONE);
-                    signUp.setVisibility(View.VISIBLE);
-                }else {
-                    signUpUser();
-                }
+        signUp.setOnClickListener(v -> {
+            if(!validateFirstName() | !validateLatName() | !validateNationalID() | !validateMail() | !validatePwd() | !validateConfirmPwd()){
+                progressBar.setVisibility(View.GONE);
+                signUp.setVisibility(View.VISIBLE);
+            }else {
+                signUpUser();
             }
         });
 
         //go to main activity when log in button is clicked
-        login_here.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SignUp.this, Login.class);
-                startActivity(intent);
-                finish();
-            }
+        login_here.setOnClickListener(v -> {
+            Intent intent = new Intent(SignUp.this, Login.class);
+            startActivity(intent);
+            finish();
         });
         //go to main activity when log in button is clicked
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SignUp.this, Login.class);
-                startActivity(intent);
-                finish();
-            }
+        cancel.setOnClickListener(v -> {
+            Intent intent = new Intent(SignUp.this, Login.class);
+            startActivity(intent);
+            finish();
         });
 
     }
@@ -184,6 +176,7 @@ public class SignUp extends AppCompatActivity {
         finish();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.R)
     public void signUpUser(){
 
         progressBar.setVisibility(View.VISIBLE);
@@ -202,43 +195,29 @@ public class SignUp extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         mAuth.createUserWithEmailAndPassword(emailS, passwordS)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
 
-                            userID = mAuth.getCurrentUser().getUid();
-                            DocumentReference documentReference = firebaseFirestore.collection("USERS").document(userID);
+                        userID = mAuth.getCurrentUser().getUid();
+                        DocumentReference documentReference = firebaseFirestore.collection("USERS").document(userID);
 
-                            Map<String, Object> user = new HashMap<>();
+                        Map<String, Object> user = new HashMap<>();
 
-                            user.put("firstName", firstNameS);
-                            user.put("lastName", lastNameS);
-                            user.put("nationalID", idS);
-                            user.put("email", emailS);
-                            user.put("password", passwordS);
-                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @RequiresApi(api = Build.VERSION_CODES.R)
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    Log.d(TAG,"onSuccess: Successfully registered user: " +userID);
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.w("FireStoreDataError:", e.getMessage());
-                                }
-                            });
+                        user.put("firstName", firstNameS);
+                        user.put("lastName", lastNameS);
+                        user.put("nationalID", idS);
+                        user.put("email", emailS);
+                        user.put("password", passwordS);
+                        documentReference.set(user).addOnSuccessListener(unused -> Log.d(TAG,"onSuccess: Successfully registered user: " +userID)).addOnFailureListener(e -> Log.w("FireStoreDataError:", e.getMessage()));
 
-                            Intent intent = new Intent(SignUp.this, Login.class);
-                            startActivity(intent);
-                            finish();
-                            Toast.makeText(SignUp.this, "Sign up successful", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(SignUp.this, Login.class);
+                        startActivity(intent);
+                        finish();
+                        Toast.makeText(SignUp.this, "Sign up successful", Toast.LENGTH_SHORT).show();
 
-                        } else {
-                            Log.w("Sign up error:", task.getException());
-                            Toast.makeText(SignUp.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
-                        }
+                    } else {
+                        Log.w("Sign up error:", task.getException());
+                        Toast.makeText(SignUp.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
     }
