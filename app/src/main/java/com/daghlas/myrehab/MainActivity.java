@@ -1,30 +1,33 @@
 package com.daghlas.myrehab;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.Calendar;
+
+/**
+ * DEVELOPER: daghlaskaire58@gmail.com
+ * For KELVIN WASONGA
+ * JULY 2023
+ */
 
 public class MainActivity extends AppCompatActivity {
 
@@ -74,42 +77,30 @@ public class MainActivity extends AppCompatActivity {
         //Firebase
         mAuth = FirebaseAuth.getInstance();
 
-        enroll_kid.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Enrollment.class);
-                startActivity(intent);
-                finish();
-            }
+        enroll_kid.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, Enrollment.class);
+            startActivity(intent);
+            finish();
         });
-        new_rehab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Rehabs.class);
-                startActivity(intent);
-                finish();
-            }
+        new_rehab.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, Rehabs.class);
+            startActivity(intent);
+            finish();
         });
-        manage_kids.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, KManagement.class);
-                startActivity(intent);
-                finish();
-            }
+        manage_kids.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, KManagement.class);
+            startActivity(intent);
+            finish();
         });
-        manage_rehabs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RManagement.class);
-                startActivity(intent);
-                finish();
-            }
+        manage_rehabs.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, RManagement.class);
+            startActivity(intent);
+            finish();
         });
 
         //action bar title & back button
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Wesley's REHAB");
+            getSupportActionBar().setTitle("Kevin's REHAB App");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
@@ -160,7 +151,13 @@ public class MainActivity extends AppCompatActivity {
                     .setPositiveButton("No", (dialog, id) -> {
                     })
                     .setNegativeButton("Yes", (dialog, id) -> {
-                        mAuth.signOut(); //SIGN OUT LOGGED IN USER
+                        //CLEAR CREDENTIALS
+                        SharedPreferences sharedPreferences = getSharedPreferences("sessionManager", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.remove("email");
+                        editor.remove("password");
+                        editor.apply();
+                        //END CLEAR
                         Intent intent = new Intent(MainActivity.this, Login.class);
                         startActivity(intent);
                         finish();
@@ -179,16 +176,13 @@ public class MainActivity extends AppCompatActivity {
         String userID = mAuth.getCurrentUser().getUid();
 
         DocumentReference documentReference = firebaseFirestore.collection("USERS").document(userID);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                assert value != null;
-                name1.setText(value.getString("firstName"));
-                name3.setText(value.getString("lastName"));
-                email.setText(value.getString("email"));
-                id.setText(value.getString("nationalID"));
-                tag.setText(value.getString("lastName"));
-            }
+        documentReference.addSnapshotListener(this, (value, error) -> {
+            assert value != null;
+            name1.setText(value.getString("firstName"));
+            name3.setText(value.getString("lastName"));
+            email.setText(value.getString("email"));
+            id.setText(value.getString("nationalID"));
+            tag.setText(value.getString("lastName"));
         });
     }
 }
