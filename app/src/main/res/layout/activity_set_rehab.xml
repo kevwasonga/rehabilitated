@@ -35,22 +35,35 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="rehab's name"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
-        <TextView
-            android:id="@+id/allocated_rehab"
+        <LinearLayout
+            android:id="@+id/layout_dir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ceo/director's name"
-            android:textSize="15dp"
-            android:textStyle="bold"
+            android:orientation="horizontal"
+            android:padding="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/full_name" />
+            app:layout_constraintTop_toBottomOf="@+id/full_name" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Director: " />
+
+            <TextView
+                android:id="@+id/allocated_rehab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ceo/director's name"
+                android:textSize="15dp"
+                android:textStyle="bold"/>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/layout_enr"
@@ -62,7 +75,7 @@
             android:padding="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/allocated_rehab">
+            app:layout_constraintTop_toBottomOf="@id/layout_dir">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -156,54 +169,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Population capacity: "
-                android:textSize="15dp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/capacity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="13dp"
-                android:layout_marginBottom="5dp"
-                android:text="population" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="8dp"
-                android:background="@color/gray"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Enrolled kids: "
-                android:textSize="15dp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/enrolled"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="enrolled kids"
-                android:textSize="13dp"
-                android:layout_marginBottom="5dp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="8dp"
-                android:background="@color/gray"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="For donations: "
                 android:textSize="15dp"
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/face_id"
+                android:id="@+id/donations"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="donation account/link"
