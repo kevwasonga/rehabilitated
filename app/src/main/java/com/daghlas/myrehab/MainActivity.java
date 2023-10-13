@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView greetings;
     TextView name1, name3, email, id, tag;
-    LinearLayout enroll_kid, new_rehab, manage_kids, manage_rehabs;
+    LinearLayout enroll_kid, new_rehab, manage_kids, manage_rehabs, rehab_report;
     //Firebase
     FirebaseAuth mAuth;
 
@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         new_rehab = findViewById(R.id.layout2);
         manage_kids = findViewById(R.id.layout3);
         manage_rehabs = findViewById(R.id.layout4);
+        rehab_report = findViewById(R.id.layout5);
 
         name1 = findViewById(R.id.fname);
         name3 = findViewById(R.id.lname);
@@ -94,6 +95,11 @@ public class MainActivity extends AppCompatActivity {
         });
         manage_rehabs.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, RManagement.class);
+            startActivity(intent);
+            finish();
+        });
+        rehab_report.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, Reports.class);
             startActivity(intent);
             finish();
         });
