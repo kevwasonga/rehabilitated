@@ -1,4 +1,4 @@
-package com.daghlas.myrehab;
+package com.daghlas.myrehab.Model;
 
 /**
  * DEVELOPER: daghlaskaire58@gmail.com
