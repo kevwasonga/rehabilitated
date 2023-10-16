@@ -1,4 +1,4 @@
-package com.daghlas.myrehab;
+package com.daghlas.myrehab.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.daghlas.myrehab.Interface.RManagementInterface;
+import com.daghlas.myrehab.R;
+import com.daghlas.myrehab.Model.RModel;
+import com.daghlas.myrehab.SetRehab;
 
 import java.util.List;
 
