@@ -1,4 +1,4 @@
-package com.daghlas.myrehab;
+package com.daghlas.myrehab.Adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -14,6 +14,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.daghlas.myrehab.Interface.KManagementInterface;
+import com.daghlas.myrehab.Model.KModel;
+import com.daghlas.myrehab.R;
+import com.daghlas.myrehab.SetKid;
 
 import java.util.ArrayList;
 import java.util.List;
